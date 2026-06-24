@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalEra Hub - ChatBOT, Aplicativo & Código QR</title>
+    <!-- Tailwind CSS para diseño moderno y fluido -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para iconos atractivos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts para tipografías limpias y elegantes -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f5ff',
+                            100: '#e0eafd',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        },
+                        dark: {
+                            900: '#0b0f19',
+                            800: '#111827',
+                            700: '#1f2937',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        .heading-font {
+            font-family: 'Outfit', sans-serif;
+        }
+        /* Efecto de cristal esmerilado para elementos premium */
+        .glassmorphism {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* Transiciones suaves */
+        .tab-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Personalización de barra de scroll */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-primary-500 selection:text-white">
+
+    <!-- CABECERA DE LA APLICACIÓN -->
+    <header class="glassmorphism sticky top-0 z-50 px-4 py-4 md:px-8 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-tr from-primary-600 to-indigo-500 p-2.5 rounded-2xl shadow-lg shadow-primary-500/20 animate-pulse">
+                    <i class="fa-solid fa-laptop-code text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="heading-font text-2xl font-extrabold bg-gradient-to-r from-white via-blue-200 to-blue-500 bg-clip-text text-transparent">
+                        DigitalEra Hub
+                    </h1>
+                    <p class="text-xs text-gray-400">Portal Educativo y Herramientas Digitales</p>
+                </div>
+            </div>
+
+            <!-- Navegación por pestañas (Responsive) -->
+            <nav class="flex bg-gray-900/80 p-1.5 rounded-xl border border-gray-800 w-full md:w-auto overflow-x-auto">
+                <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium tab-transition bg-primary-600 text-white shadow-md">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Aplicativo Era Digital</span>
+                </button>
+                <button onclick="switchTab('chatbot')" id="tab-chatbot" class="tab-btn flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium tab-transition text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-robot"></i>
+                    <span>ChatBOT IA</span>
+                </button>
+                <button onclick="switchTab('qrcode')" id="tab-qrcode" class="tab-btn flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium tab-transition text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-qrcode"></i>
+                    <span>Generador QR</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-8">
+
+        <!-- SECCIÓN DE PRESENTACIÓN DE ESTUDIANTE (Dinamiza la entrega escolar) -->
+        <section class="mb-8 glassmorphism rounded-3xl p-6 relative overflow-hidden">
+            <div class="absolute -right-16 -top-16 w-48 h-48 bg-primary-600/10 rounded-full blur-3xl"></div>
+            <div class="absolute -left-16 -bottom-16 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl"></div>
+            
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                    <span class="bg-blue-500/10 text-blue-400 text-xs px-3 py-1.5 rounded-full font-semibold border border-blue-500/20">
+                        PROYECTO ACADÉMICO ENTREGABLE
+                    </span>
+                    <h2 class="heading-font text-xl md:text-2xl font-bold mt-2">Información del Estudiante</h2>
+                    <p class="text-sm text-gray-400">Personaliza estos datos antes de descargar o compartir los enlaces de tu entrega académica.</p>
+                </div>
+                
+                <!-- Inputs rápidos de datos para personalizar la entrega -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full md:w-auto">
+                    <input type="text" id="studentName" placeholder="Tu Nombre / Grupo" oninput="updateStudentBadge()" class="bg-gray-950 border border-gray-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary-500 text-gray-200">
+                    <input type="text" id="subjectName" placeholder="Materia o Proyecto" oninput="updateStudentBadge()" class="bg-gray-950 border border-gray-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary-500 text-gray-200">
+                </div>
+            </div>
+
+            <!-- Badge dinámico de presentación -->
+            <div id="studentBadge" class="mt-4 pt-4 border-t border-gray-800/60 flex flex-wrap gap-4 text-xs text-gray-400">
+                <div><i class="fa-solid fa-user text-primary-500 mr-1.5"></i> Estudiante: <span id="lblStudent" class="text-white font-medium">Invitado Digital</span></div>
+                <div><i class="fa-solid fa-graduation-cap text-primary-500 mr-1.5"></i> Materia/Proyecto: <span id="lblSubject" class="text-white font-medium">Era Digital</span></div>
+                <div><i class="fa-solid fa-calendar text-primary-500 mr-1.5"></i> Fecha: <span id="lblDate" class="text-white font-medium">23/06/2026</span></div>
+            </div>
+        </section>
+
+        <!-- ================= PESTAÑA 1: APLICATIVO DE ERA DIGITAL ================= -->
+        <section id="content-dashboard" class="tab-content block space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Tarjeta Principal de Introducción -->
+                <div class="lg:col-span-2 glassmorphism rounded-3xl p-6 md:p-8 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute right-0 top-0 opacity-10 text-9xl font-bold font-heading select-none pointer-events-none transform translate-x-10 translate-y-10">
+                        2026
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 text-primary-400 font-semibold text-sm uppercase tracking-wider mb-2">
+                            <span class="w-2 h-2 rounded-full bg-primary-500 animate-ping"></span>
+                            Era de la Transformación Digital
+                        </div>
+                        <h3 class="heading-font text-3xl md:text-4xl font-extrabold text-white leading-tight mb-4">
+                            Bienvenidos al Hub del Futuro Tecnológico
+                        </h3>
+                        <p class="text-gray-300 text-base leading-relaxed mb-6">
+                            La era digital no solo redefine cómo programamos, sino cómo aprendemos y conectamos. Este aplicativo interactivo ha sido desarrollado para consolidar herramientas esenciales en una sola interfaz limpia: comunicación directa mediante Inteligencia Artificial, despliegue de datos de rendimiento y conectividad física-digital a través de códigos de respuesta rápida (QR).
+                        </p>
+                    </div>
+
+                    <!-- Estadísticas dinámicas e interactivas de la Era Digital -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-gray-800">
+                        <div class="bg-gray-950/50 p-4 rounded-2xl border border-gray-800/50 hover:border-primary-500/30 transition-colors">
+                            <div class="text-2xl font-extrabold text-white heading-font">94%</div>
+                            <div class="text-xs text-gray-400 mt-1">Conectividad global proyectada</div>
+                        </div>
+                        <div class="bg-gray-950/50 p-4 rounded-2xl border border-gray-800/50 hover:border-primary-500/30 transition-colors">
+                            <div class="text-2xl font-extrabold text-white heading-font">10x</div>
+                            <div class="text-xs text-gray-400 mt-1">Aceleración en aprendizaje asistido</div>
+                        </div>
+                        <div class="bg-gray-950/50 p-4 rounded-2xl border border-gray-800/50 hover:border-primary-500/30 transition-colors col-span-2 sm:col-span-1">
+                            <div class="text-2xl font-extrabold text-white heading-font">En Vivo</div>
+                            <div class="text-xs text-gray-400 mt-1">ChatBOT AI Operativo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TEST DINÁMICO INTERACTIVO: Evaluador Digital -->
+                <div class="glassmorphism rounded-3xl p-6 relative">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-emerald-500/10 text-emerald-400 p-2 rounded-xl border border-emerald-500/20">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <h4 class="heading-font font-bold text-lg text-white">Prueba tu Nivel Digital</h4>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-6">Completa este test dinámico y genera un reporte imprimible para tu tarea.</p>
+                    
+                    <!-- Contenedor del Quiz interactivo -->
+                    <div id="quiz-container" class="space-y-4">
+                        <div id="quiz-question-box">
+                            <p class="text-sm font-semibold text-gray-200 mb-3" id="quiz-question">1. ¿Qué tecnología define la flexibilidad de la Era Digital actual?</p>
+                            <div class="space-y-2">
+                                <button onclick="selectAnswer(0)" class="w-full text-left text-sm bg-gray-950 hover:bg-primary-600/20 p-3 rounded-xl border border-gray-800 hover:border-primary-500 transition-all block">A) La nube y la Inteligencia Artificial híbrida</button>
+                                <button onclick="selectAnswer(1)" class="w-full text-left text-sm bg-gray-950 hover:bg-primary-600/20 p-3 rounded-xl border border-gray-800 hover:border-primary-500 transition-all block">B) Unidades de disquete locales</button>
+                                <button onclick="selectAnswer(2)" class="w-full text-left text-sm bg-gray-950 hover:bg-primary-600/20 p-3 rounded-xl border border-gray-800 hover:border-primary-500 transition-all block">C) Redes de cobre analógicas tradicionales</button>
+                            </div>
+                        </div>
+                        <div id="quiz-result" class="hidden text-center py-6">
+                            <div class="text-4xl text-yellow-400 mb-2"><i class="fa-solid fa-medal"></i></div>
+                            <h5 class="font-bold text-white text-lg">¡Test Completado!</h5>
+                            <p class="text-xs text-gray-400 mt-1">Puntuación: <span id="quiz-score" class="font-bold text-primary-400">3/3</span> respuestas correctas.</p>
+                            <button onclick="resetQuiz()" class="mt-4 bg-gray-800 hover:bg-gray-700 text-xs px-4 py-2 rounded-lg font-semibold transition-colors">Realizar de nuevo</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TARJETAS DE CARACTERÍSTICAS DE LA ERA DIGITAL -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Tarjeta 1 -->
+                <div class="glassmorphism rounded-2xl p-6 hover:translate-y-[-4px] transition-all duration-300 group border-t-2 border-t-blue-500">
+                    <div class="text-blue-500 text-3xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-robot"></i></div>
+                    <h4 class="font-bold text-white text-lg mb-2">Asistente Virtual IA</h4>
+                    <p class="text-sm text-gray-400">Una herramienta que asiste en tiempo real para acelerar la comprensión conceptual, programar y resolver enigmas cotidianos.</p>
+                </div>
+                <!-- Tarjeta 2 -->
+                <div class="glassmorphism rounded-2xl p-6 hover:translate-y-[-4px] transition-all duration-300 group border-t-2 border-t-indigo-500">
+                    <div class="text-indigo-500 text-3xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-qrcode"></i></div>
+                    <h4 class="font-bold text-white text-lg mb-2">Conectividad Omnicanal</h4>
+                    <p class="text-sm text-gray-400">Enlaza cualquier recurso interactivo mediante el generador dinámico de códigos QR para facilitar la portabilidad en dispositivos móviles.</p>
+                </div>
+                <!-- Tarjeta 3 -->
+                <div class="glassmorphism rounded-2xl p-6 hover:translate-y-[-4px] transition-all duration-300 group border-t-2 border-t-emerald-500">
+                    <div class="text-emerald-500 text-3xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-display"></i></div>
+                    <h4 class="font-bold text-white text-lg mb-2">Diseño Adaptativo (UI/UX)</h4>
+                    <p class="text-sm text-gray-400">Optimizado con layouts fluidos, colores de alto contraste pensados para sistemas modernos y máxima compatibilidad móvil.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PESTAÑA 2: CHATBOT INTELIGENTE ================= -->
+        <section id="content-chatbot" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                
+                <!-- Panel de información del ChatBOT -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="glassmorphism rounded-3xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-primary-500/10 text-primary-400 p-2.5 rounded-xl border border-primary-500/20">
+                                <i class="fa-solid fa-info"></i>
+                            </div>
+                            <h4 class="heading-font font-bold text-lg text-white">Sobre el ChatBOT</h4>
+                        </div>
+                        <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                            Este chatbot interactivo utiliza tecnología avanzada de procesamiento de lenguaje natural en tiempo real para resolver tus dudas tecnológicas instantáneamente.
+                        </p>
+                        <div class="space-y-2.5">
+                            <div class="flex items-center gap-2 text-xs text-gray-300 bg-gray-950 p-2.5 rounded-xl border border-gray-800">
+                                <i class="fa-solid fa-bolt text-yellow-400"></i>
+                                <span>Respuestas instantáneas</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-gray-300 bg-gray-950 p-2.5 rounded-xl border border-gray-800">
+                                <i class="fa-solid fa-graduation-cap text-indigo-400"></i>
+                                <span>Perfecto para tareas escolares</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prompts preestablecidos y sugerencias rápidas -->
+                    <div class="glassmorphism rounded-3xl p-6">
+                        <h4 class="heading-font font-bold text-sm text-white mb-3">Preguntas Sugeridas</h4>
+                        <div class="space-y-2" id="suggested-prompts">
+                            <button onclick="sendSuggested('¿Qué es la era digital y cuáles son sus características principales?')" class="w-full text-left text-xs bg-gray-950 hover:bg-primary-600/20 p-2.5 rounded-xl border border-gray-800 hover:border-primary-500 transition-all text-gray-300">
+                                ¿Qué es la era digital?
+                            </button>
+                            <button onclick="sendSuggested('Dame 3 ideas de proyectos escolares innovadores que usen tecnología')" class="w-full text-left text-xs bg-gray-950 hover:bg-primary-600/20 p-2.5 rounded-xl border border-gray-800 hover:border-primary-500 transition-all text-gray-300">
+                                Ideas de proyectos escolares
+                            </button>
+                            <button onclick="sendSuggested('¿Cómo puedo generar un código QR y para qué sirve?')" class="w-full text-left text-xs bg-gray-950 hover:bg-primary-600/20 p-2.5 rounded-xl border border-gray-800 hover:border-primary-500 transition-all text-gray-300">
+                                ¿Para qué sirve el código QR?
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ventana interactiva del ChatBOT -->
+                <div class="lg:col-span-3 glassmorphism rounded-3xl flex flex-col h-[600px] overflow-hidden border border-gray-800">
+                    <!-- Cabecera del chat -->
+                    <div class="bg-gray-900/50 p-4 border-b border-gray-800 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="relative">
+                                <div class="bg-gradient-to-tr from-primary-600 to-indigo-500 p-2 rounded-xl text-white">
+                                    <i class="fa-solid fa-robot"></i>
+                                </div>
+                                <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-dark-900 rounded-full"></span>
+                            </div>
+                            <div>
+                                <h4 class="heading-font font-bold text-sm text-white">Asistente Digital AI</h4>
+                                <p class="text-xs text-gray-400">En línea • Gemini Inteligencia Artificial</p>
+                            </div>
+                        </div>
+                        <button onclick="clearChat()" class="text-xs bg-gray-850 hover:bg-gray-800 text-gray-400 hover:text-white px-3 py-1.5 rounded-lg border border-gray-800 transition-colors" title="Limpiar conversación">
+                            <i class="fa-solid fa-trash-can mr-1.5"></i>Limpiar
+                        </button>
+                    </div>
+
+                    <!-- Mensajes del chat -->
+                    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 bg-gray-950/20">
+                        <!-- Mensaje de bienvenida inicial -->
+                        <div class="flex gap-3 max-w-[85%]">
+                            <div class="flex-shrink-0 bg-primary-600/20 text-primary-400 p-2 rounded-xl h-9 w-9 flex items-center justify-center border border-primary-500/20">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div class="bg-gray-900/80 border border-gray-800 p-3.5 rounded-2xl rounded-tl-none">
+                                <p class="text-sm text-gray-200 leading-relaxed">
+                                    ¡Hola! Soy tu <strong>Asistente Virtual de la Era Digital</strong>. Estoy aquí para resolver tus dudas escolares, explicarte conceptos de programación, redes o para ayudarte a diseñar proyectos innovadores. 
+                                </p>
+                                <p class="text-xs text-gray-400 mt-2">¿En qué puedo asistirte hoy?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Indicador de carga -->
+                    <div id="chat-loading" class="hidden px-6 py-3 flex items-center gap-2 text-xs text-gray-400 bg-gray-900/30 border-t border-gray-850">
+                        <i class="fa-solid fa-circle-notch animate-spin text-primary-500"></i>
+                        <span>Procesando consulta e inteligencia artificial analizando...</span>
+                    </div>
+
+                    <!-- Formulario de entrada -->
+                    <form id="chat-form" onsubmit="handleChatSubmit(event)" class="p-4 bg-gray-900/40 border-t border-gray-850 flex gap-2">
+                        <input type="text" id="chat-input" placeholder="Escribe tu consulta tecnológica aquí..." required class="flex-1 bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary-500 text-gray-200">
+                        <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white px-5 rounded-xl font-semibold flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= PESTAÑA 3: GENERADOR QR ================= -->
+        <section id="content-qrcode" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Panel de Configuración del Código QR -->
+                <div class="glassmorphism rounded-3xl p-6 md:p-8 space-y-6">
+                    <div>
+                        <span class="bg-indigo-500/10 text-indigo-400 text-xs px-3 py-1.5 rounded-full font-semibold border border-indigo-500/20">
+                            CONECTIVIDAD INTEGRADA
+                        </span>
+                        <h3 class="heading-font text-2xl font-bold text-white mt-3">Creador de Códigos QR Dinámicos</h3>
+                        <p class="text-sm text-gray-400 mt-1">Escribe cualquier dirección web o texto para transformarlo al instante en un código QR que podrás descargar e incluir en tu entrega o informe.</p>
+                    </div>
+
+                    <!-- Campos de entrada para QR -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Texto o Enlace URL de Destino</label>
+                            <input type="text" id="qr-input" value="https://example.com/digital-era-hub" placeholder="Escribe el link que desees digitalizar..." class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary-500 text-gray-200">
+                        </div>
+                        
+                        <!-- Presets útiles para que el estudiante use rápido -->
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Enlaces rápidos útiles</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <button onclick="setQrPreset('Este es el Chatbot Oficial de la Era Digital de ' + document.getElementById('lblStudent').textContent)" class="text-left text-xs bg-gray-900 hover:bg-gray-850 p-2.5 rounded-xl border border-gray-800 text-gray-300">
+                                    <i class="fa-solid fa-robot mr-1.5 text-primary-400"></i> Mi ChatBOT Escolar
+                                </button>
+                                <button onclick="setQrPreset(window.location.href)" class="text-left text-xs bg-gray-900 hover:bg-gray-850 p-2.5 rounded-xl border border-gray-800 text-gray-300">
+                                    <i class="fa-solid fa-link mr-1.5 text-indigo-400"></i> Enlace de esta App Web
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Botón de Generar -->
+                        <button onclick="generateQRCode()" class="w-full bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-700 hover:to-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-primary-600/20">
+                            <i class="fa-solid fa-rotate"></i>
+                            <span>Generar Código QR Nuevo</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Panel de Visualización y Descarga del Código QR -->
+                <div class="glassmorphism rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                    <div class="absolute -right-16 -bottom-16 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl"></div>
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-200 inline-block relative group">
+                        <!-- Contenedor donde se inserta el QR dinámicamente -->
+                        <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://example.com/digital-era-hub" alt="Código QR de la era digital" class="w-[200px] h-[200px] md:w-[250px] md:h-[250px] rounded-lg">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-2xl">
+                            <span class="text-white font-semibold text-sm">Listo para Escanear <i class="fa-solid fa-mobile-screen ml-1"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 space-y-2">
+                        <h4 class="heading-font font-bold text-lg text-white">Tu Código QR Generado</h4>
+                        <p class="text-xs text-gray-400 max-w-sm mx-auto">
+                            Apunta con la cámara de cualquier dispositivo móvil o tablet para redirigirte al contenido instantáneamente.
+                        </p>
+                    </div>
+
+                    <!-- Acciones para guardar el QR generado -->
+                    <div class="mt-6 flex flex-wrap gap-3 justify-center">
+                        <button onclick="downloadQR()" class="bg-gray-900 hover:bg-gray-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl border border-gray-800 hover:border-gray-700 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-download"></i>
+                            <span>Descargar Imagen (PNG)</span>
+                        </button>
+                        <button onclick="copyQRLink()" class="bg-gray-900 hover:bg-gray-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl border border-gray-800 hover:border-gray-700 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-copy"></i>
+                            <span>Copiar Enlace QR</span>
+                        </button>
+                    </div>
+
+                    <!-- Notificación de copiado interna (Sin alerts de navegador) -->
+                    <div id="toast-notification" class="hidden mt-4 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs px-4 py-2 rounded-lg items-center gap-2">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span id="toast-text">Enlace copiado correctamente</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA ESCOLAR -->
+    <footer class="bg-gray-950 border-t border-gray-900 py-8 px-4 md:px-8 mt-12 text-center text-sm text-gray-400">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-laptop text-primary-500"></i>
+                <span class="font-bold text-white">DigitalEra Hub</span>
+                <span>• Entregable de Tecnología Avanzada</span>
+            </div>
+            <div class="text-xs text-gray-500">
+                Creado en el marco de la Era Digital interactiva • 2026
+            </div>
+        </div>
+    </footer>
+
+    <!-- LÓGICA DE PROGRAMACIÓN DE LA APP -->
+    <script>
+        // Configuración de la API del ChatBOT de Gemini
+        const apiKey = ""; // API Key vacía que provee el entorno en tiempo real
+
+        // Variables de Estado del Quiz
+        let currentQuizIndex = 0;
+        const quizData = [
+            {
+                question: "1. ¿Qué tecnología define la flexibilidad de la Era Digital actual?",
+                answers: ["A) La nube y la Inteligencia Artificial híbrida", "B) Unidades de disquete locales", "C) Redes de cobre analógicas tradicionales"],
+                correct: 0
+            },
+            {
+                question: "2. ¿Cuál es el principal beneficio de usar un código QR en educación?",
+                answers: ["A) Hace los exámenes más largos", "B) Conecta recursos físicos directamente con contenido digital móvil", "C) Elimina por completo la necesidad de usar computadoras"],
+                correct: 1
+            },
+            {
+                question: "3. ¿Cuál de las siguientes es una buena práctica de ciudadanía digital?",
+                answers: ["A) Compartir contraseñas personales en foros públicos", "B) Proteger la privacidad e informarse con pensamiento crítico", "C) Ignorar todas las alertas de seguridad de los sistemas"],
+                correct: 1
+            }
+        ];
+        let score = 0;
+
+        // Cambiar pestañas de la aplicación de manera interactiva
+        function switchTab(tabId) {
+            // Ocultar todos los contenidos de las pestañas
+            document.querySelectorAll('.tab-content').forEach(element => {
+                element.classList.add('hidden');
+                element.classList.remove('block');
+            });
+
+            // Remover el estilo activo de todos los botones de navegación
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-primary-600', 'text-white', 'shadow-md');
+                btn.classList.add('text-gray-400', 'hover:text-white');
+            });
+
+            // Mostrar el contenido seleccionado
+            const activeContent = document.getElementById(`content-${tabId}`);
+            if (activeContent) {
+                activeContent.classList.remove('hidden');
+                activeContent.classList.add('block');
+            }
+
+            // Activar visualmente el botón seleccionado
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-primary-600', 'text-white', 'shadow-md');
+                activeBtn.classList.remove('text-gray-400', 'hover:text-white');
+            }
+        }
+
+        // Actualizar dinámicamente los datos del Estudiante en el badge de presentación
+        function updateStudentBadge() {
+            const nameInput = document.getElementById('studentName').value;
+            const subjectInput = document.getElementById('subjectName').value;
+            
+            document.getElementById('lblStudent').textContent = nameInput ? nameInput : "Invitado Digital";
+            document.getElementById('lblSubject').textContent = subjectInput ? subjectInput : "Era Digital";
+        }
+
+        // Manejar el envío de mensajes en el chat
+        async function handleChatSubmit(event) {
+            event.preventDefault();
+            const inputField = document.getElementById('chat-input');
+            const messageText = inputField.value.trim();
+            if (!messageText) return;
+
+            // Limpiar campo de entrada
+            inputField.value = '';
+
+            // Renderizar el mensaje del usuario de manera fluida
+            appendMessage(messageText, 'user');
+
+            // Mostrar estado cargando
+            const loadingIndicator = document.getElementById('chat-loading');
+            loadingIndicator.classList.remove('hidden');
+
+            try {
+                const aiResponse = await fetchGeminiResponse(messageText);
+                appendMessage(aiResponse, 'bot');
+            } catch (error) {
+                appendMessage("Lo lamento, ha ocurrido un error al conectar con los servidores de Inteligencia Artificial. Por favor verifica tu conexión.", 'bot');
+            } finally {
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+
+        // Enviar preguntas sugeridas rápido
+        function sendSuggested(promptText) {
+            appendMessage(promptText, 'user');
+            const loadingIndicator = document.getElementById('chat-loading');
+            loadingIndicator.classList.remove('hidden');
+            
+            fetchGeminiResponse(promptText).then(response => {
+                appendMessage(response, 'bot');
+            }).catch(() => {
+                appendMessage("Lo lamento, el asistente inteligente está experimentando fallas temporales.", 'bot');
+            }).finally(() => {
+                loadingIndicator.classList.add('hidden');
+            });
+        }
+
+        // Insertar un nuevo globo de mensaje en la conversación
+        function appendMessage(text, sender) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex gap-3 max-w-[85%] ${sender === 'user' ? 'ml-auto justify-end' : ''}`;
+
+            const avatarHtml = sender === 'bot' 
+                ? `<div class="flex-shrink-0 bg-primary-600/20 text-primary-400 p-2 rounded-xl h-9 w-9 flex items-center justify-center border border-primary-500/20"><i class="fa-solid fa-robot"></i></div>`
+                : `<div class="flex-shrink-0 bg-indigo-500/20 text-indigo-400 p-2 rounded-xl h-9 w-9 flex items-center justify-center border border-indigo-500/20"><i class="fa-solid fa-user"></i></div>`;
+
+            const bubbleClass = sender === 'bot'
+                ? 'bg-gray-900/80 border border-gray-800 p-3.5 rounded-2xl rounded-tl-none text-gray-200'
+                : 'bg-primary-600 border border-primary-500 p-3.5 rounded-2xl rounded-tr-none text-white';
+
+            messageDiv.innerHTML = sender === 'user'
+                ? `<div class="${bubbleClass}"><p class="text-sm leading-relaxed">${escapeHtml(text)}</p></div>${avatarHtml}`
+                : `${avatarHtml}<div class="${bubbleClass}"><p class="text-sm leading-relaxed">${formatMarkdownText(text)}</p></div>`;
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Limpiar el historial del chat
+        function clearChat() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = `
+                <div class="flex gap-3 max-w-[85%]">
+                    <div class="flex-shrink-0 bg-primary-600/20 text-primary-400 p-2 rounded-xl h-9 w-9 flex items-center justify-center border border-primary-500/20">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="bg-gray-900/80 border border-gray-800 p-3.5 rounded-2xl rounded-tl-none">
+                        <p class="text-sm text-gray-200 leading-relaxed">
+                            Historial limpio. ¿En qué puedo asistirte ahora con tu tarea de la Era Digital?
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Llamar a la API de Gemini (con exponencial backoff de hasta 5 intentos)
+        async function fetchGeminiResponse(userQuery) {
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const systemPrompt = "Eres un chatbot inteligente para 'DigitalEra Hub', un hub de aprendizaje. Responde consultas académicas de forma interactiva, motivadora y clara. Adapta tus respuestas al idioma español de forma profesional y educada.";
+            
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            let delay = 1000;
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error('Fallo en la comunicación con la API.');
+                    const result = await response.json();
+                    return result.candidates?.[0]?.content?.parts?.[0]?.text || "No he podido procesar una respuesta comprensible en este momento.";
+                } catch (e) {
+                    if (i === 4) throw e;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        // Generar un código QR nuevo dinámicamente usando un servidor estable
+        function generateQRCode() {
+            const inputVal = document.getElementById('qr-input').value.trim();
+            if (!inputVal) return;
+
+            const qrImage = document.getElementById('qr-image');
+            
+            // Usar API robusta de generación de códigos QR
+            const encodedData = encodeURIComponent(inputVal);
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodedData}`;
+            
+            // Efecto de carga en imagen
+            qrImage.style.opacity = '0.3';
+            qrImage.src = qrUrl;
+            
+            qrImage.onload = function() {
+                qrImage.style.opacity = '1';
+                showToast("Código QR generado exitosamente");
+            };
+        }
+
+        // Establecer un ajuste predeterminado para el QR
+        function setQrPreset(value) {
+            document.getElementById('qr-input').value = value;
+            generateQRCode();
+        }
+
+        // Descargar el código QR generado
+        function downloadQR() {
+            const qrImage = document.getElementById('qr-image');
+            const link = document.createElement('a');
+            link.href = qrImage.src;
+            link.download = 'codigo-qr-digitalera.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("Descarga de código QR iniciada");
+        }
+
+        // Copiar el enlace de datos del QR generado
+        function copyQRLink() {
+            const qrInput = document.getElementById('qr-input').value;
+            
+            // Método compatible para copiar texto en portapapeles
+            const tempInput = document.createElement('input');
+            tempInput.value = qrInput;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            showToast("Enlace del código QR copiado al portapapeles");
+        }
+
+        // Mostrar una notificación toast interna elegante
+        function showToast(text) {
+            const toast = document.getElementById('toast-notification');
+            const toastText = document.getElementById('toast-text');
+            toastText.textContent = text;
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 3000);
+        }
+
+        // Lógica del Evaluador del Quiz Digital
+        function selectAnswer(index) {
+            if (index === quizData[currentQuizIndex].correct) {
+                score++;
+            }
+
+            currentQuizIndex++;
+            if (currentQuizIndex < quizData.length) {
+                // Siguiente pregunta
+                const q = quizData[currentQuizIndex];
+                document.getElementById('quiz-question').textContent = q.question;
+                const buttons = document.getElementById('quiz-question-box').querySelectorAll('button');
+                buttons.forEach((btn, i) => {
+                    btn.textContent = q.answers[i];
+                });
+            } else {
+                // Finalizar Quiz
+                document.getElementById('quiz-question-box').classList.add('hidden');
+                const resultBox = document.getElementById('quiz-result');
+                resultBox.classList.remove('hidden');
+                document.getElementById('quiz-score').textContent = `${score}/${quizData.length}`;
+            }
+        }
+
+        // Reiniciar el Quiz
+        function resetQuiz() {
+            score = 0;
+            currentQuizIndex = 0;
+            const q = quizData[0];
+            document.getElementById('quiz-question').textContent = q.question;
+            const buttons = document.getElementById('quiz-question-box').querySelectorAll('button');
+            buttons.forEach((btn, i) => {
+                btn.textContent = q.answers[i];
+            });
+            document.getElementById('quiz-question-box').classList.remove('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+        }
+
+        // Auxiliares de formato para escapar HTML y dar formato básico a Markdown
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function formatMarkdownText(text) {
+            let formatted = escapeHtml(text);
+            // Formatear negritas de markdown (**texto**)
+            formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            // Formatear listas sencillas
+            formatted = formatted.replace(/^- (.*?)$/gm, '• $1');
+            return formatted;
+        }
+
+        // Iniciar en la fecha actual
+        window.onload = function() {
+            const today = new Date();
+            const dateStr = today.getDate().toString().padStart(2, '0') + '/' + 
+                            (today.getMonth() + 1).toString().padStart(2, '0') + '/' + 
+                            today.getFullYear();
+            document.getElementById('lblDate').textContent = dateStr;
+            
+            // Generar el QR por defecto con el enlace actual de la aplicación
+            document.getElementById('qr-input').value = window.location.href;
+            generateQRCode();
+        }
+    </script>
+</body>
+</html>
